@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Before &amp; After — Ez Go Handyman Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black:      #241910;
+  --white:      #fdf8f2;
+  --cream:      #f2e9dc;
+  --tan:        #c4a882;
+  --red:        #b83224;
+  --red-light:  #d44032;
+  --dark:       #241910;
+  --text-main:  #2a1f18;
+  --text-muted: #6b5f55;
+  --border-tan: rgba(196,168,130,0.25);
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text-main); overflow-x: hidden; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 4rem; background: rgba(36,25,16,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(196,168,130,0.18); transition: background 0.4s ease; }
+nav.scrolled { background: rgba(36,25,16,0.45); }
+.nav-logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+.nav-logo img { width: 48px; height: 48px; object-fit: contain; }
+.nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.12em; color: var(--tan); line-height: 1.1; }
+.nav-logo-text span { display: block; font-size: 0.6rem; letter-spacing: 0.2em; color: rgba(196,168,130,0.5); font-family: 'DM Sans', sans-serif; font-weight: 300; }
+.nav-back { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); background: var(--red); padding: 0.6rem 1.2rem; text-decoration: none; transition: background 0.3s; }
+.nav-back:hover { background: var(--red-light); }
+
+/* PAGE HERO */
+.page-hero { background: var(--dark); padding: 10rem 4rem 5rem; position: relative; overflow: hidden; }
+.page-hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(196,168,130,0.07) 0%, transparent 70%); }
+.page-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--tan), transparent); opacity: 0.3; }
+.page-tag { display: inline-block; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); border: 1px solid rgba(184,50,36,0.3); padding: 0.3rem 0.8rem; margin-bottom: 1.4rem; }
+.page-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 6rem); letter-spacing: 0.04em; color: var(--white); line-height: 0.92; margin-bottom: 1.4rem; }
+.page-hero h1 em { font-style: normal; color: var(--tan); }
+.page-hero p { font-size: 0.95rem; line-height: 1.8; color: rgba(253,248,242,0.45); max-width: 520px; }
+
+/* FILTER BAR */
+.filter-bar { background: var(--cream); padding: 1.5rem 4rem; display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; border-bottom: 1px solid rgba(0,0,0,0.07); }
+.filter-label { font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-right: 0.5rem; }
+.filter-btn { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.45rem 1rem; border: 1px solid rgba(196,168,130,0.3); background: transparent; color: var(--text-muted); cursor: pointer; transition: all 0.25s; font-family: 'DM Sans', sans-serif; }
+.filter-btn:hover, .filter-btn.active { background: var(--red); border-color: var(--red); color: var(--white); }
+
+/* GALLERY GRID */
+.gallery-section { padding: 5rem 4rem; }
+.gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4rem; max-width: 1200px; margin: 0 auto; }
+
+/* PROJECT CARD */
+.project-card { background: var(--white); border: 1px solid rgba(196,168,130,0.15); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+.project-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(36,25,16,0.12); }
+.project-card-tag { display: inline-block; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red); border: 1px solid rgba(184,50,36,0.25); padding: 0.25rem 0.6rem; margin: 1.4rem 1.4rem 0; }
+.project-card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; color: var(--text-main); padding: 0.6rem 1.4rem 1.2rem; line-height: 1; }
+
+/* BEFORE/AFTER SLIDER */
+.ba-slider { position: relative; width: 100%; height: 300px; overflow: hidden; cursor: col-resize; user-select: none; }
+.ba-after { position: absolute; inset: 0; }
+.ba-after img { width: 100%; height: 100%; object-fit: cover; }
+.ba-before { position: absolute; inset: 0; overflow: hidden; }
+.ba-before img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+.ba-handle { position: absolute; top: 0; bottom: 0; width: 3px; background: var(--white); z-index: 3; cursor: col-resize; transform: translateX(-50%); }
+.ba-handle-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; background: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+.ba-handle-circle svg { width: 20px; height: 20px; }
+.ba-label { position: absolute; bottom: 0.8rem; z-index: 4; font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.12em; padding: 0.3rem 0.7rem; }
+.ba-label-before { left: 0.8rem; background: rgba(36,25,16,0.75); color: var(--tan); }
+.ba-label-after { right: 0.8rem; background: var(--red); color: var(--white); }
+
+/* PROJECT DETAILS */
+.project-details { padding: 1.4rem; display: flex; gap: 2rem; border-top: 1px solid rgba(196,168,130,0.12); }
+.project-detail { flex: 1; }
+.project-detail-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+.project-detail-value { font-size: 0.84rem; font-weight: 500; color: var(--text-main); }
+
+/* CTA STRIP */
+.cta-strip { background: var(--dark); padding: 5rem 4rem; text-align: center; }
+.cta-strip h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 4vw, 3.8rem); letter-spacing: 0.04em; color: var(--white); margin-bottom: 1rem; }
+.cta-strip h2 em { font-style: normal; color: var(--tan); }
+.cta-strip p { font-size: 0.9rem; color: rgba(253,248,242,0.4); max-width: 420px; margin: 0 auto 2.5rem; line-height: 1.8; }
+.cta-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+.btn-primary { display: inline-flex; align-items: center; gap: 0.7rem; background: var(--red); color: var(--white); padding: 0.9rem 1.8rem; text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.3s; border: 1px solid var(--red); }
+.btn-primary:hover { background: transparent; color: var(--red); }
+.btn-outline { display: inline-flex; align-items: center; gap: 0.7rem; background: transparent; color: var(--tan); padding: 0.9rem 1.8rem; text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.3s; border: 1px solid rgba(196,168,130,0.4); }
+.btn-outline:hover { background: var(--tan); color: var(--dark); }
+
+/* FOOTER */
+footer { background: var(--black); padding: 3rem 4rem; border-top: 1px solid rgba(196,168,130,0.1); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.footer-info { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+.footer-info a { font-size: 0.82rem; color: rgba(253,248,242,0.42); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s; }
+.footer-info a:hover { color: var(--tan); }
+.footer-info svg { width: 13px; height: 13px; stroke: var(--tan); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.footer-copy { font-size: 0.72rem; color: rgba(253,248,242,0.18); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .page-hero { padding: 8rem 2rem 4rem; }
+  .filter-bar { padding: 1.2rem 2rem; }
+  .gallery-section { padding: 4rem 2rem; }
+  .gallery-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .cta-strip { padding: 4rem 2rem; }
+  footer { padding: 2.5rem 2rem; }
+  .submit-section { padding: 4rem 2rem; }
+}
+@media (max-width: 580px) {
+  nav { padding: 0.9rem 1.2rem; }
+  .page-hero { padding: 7rem 1.2rem 3rem; }
+  .filter-bar { padding: 1rem 1.2rem; }
+  .gallery-section { padding: 3rem 1.2rem; }
+  .ba-slider { height: 240px; }
+  .project-details { flex-wrap: wrap; gap: 1rem; }
+  .cta-strip { padding: 3rem 1.2rem; }
+  .cta-actions { flex-direction: column; align-items: center; }
+  footer { padding: 2rem 1.2rem; flex-direction: column; align-items: flex-start; }
+  .footer-info { flex-direction: column; gap: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="pageNav">
+  <a href="index.html" class="nav-logo">
+    <img src="https://i.imgur.com/uiKv9Dd.png" alt="Ez Go Handyman Services">
+    <div class="nav-logo-text">Ez Go Handyman<span>Services — Hamilton, ON</span></div>
+  </a>
+  <a href="index.html" class="nav-back">&#8592; Back to Home</a>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-tag">Our Work</div>
+  <h1>Before <em>&amp;</em> After</h1>
+  <p>Real results from real Hamilton homes. Drag the slider on each photo to see the full transformation — from start to finish.</p>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <span class="filter-label">Filter by:</span>
+  <button class="filter-btn active" onclick="filterCards('all', this)">All</button>
+  <button class="filter-btn" onclick="filterCards('kitchen', this)">Kitchen</button>
+  <button class="filter-btn" onclick="filterCards('bathroom', this)">Bathroom</button>
+  <button class="filter-btn" onclick="filterCards('flooring', this)">Flooring</button>
+  <button class="filter-btn" onclick="filterCards('painting', this)">Painting</button>
+  <button class="filter-btn" onclick="filterCards('exterior', this)">Exterior</button>
+  <button class="filter-btn" onclick="filterCards('repairs', this)">Repairs</button>
+</div>
+
+<!-- GALLERY -->
+<section class="gallery-section">
+  <div class="gallery-grid" id="galleryGrid">
+
+    <!-- Card 1: Kitchen -->
+    <div class="project-card" data-category="kitchen">
+      <span class="project-card-tag">Kitchen</span>
+      <div class="project-card-title">Cabinet Refresh &amp; Backsplash Install</div>
+      <div class="ba-slider" data-pos="50">
+        <div class="ba-after">
+          <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80" alt="After - Modern kitchen">
+        </div>
+        <div class="ba-before" style="width:50%">
+          <img src="https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=800&q=80" alt="Before - Old kitchen">
+        </div>
+        <div class="ba-handle" style="left:50%">
+          <div class="ba-handle-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b83224" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+        <span class="ba-label ba-label-before">Before</span>
+        <span class="ba-label ba-label-after">After</span>
+      </div>
+      <div class="project-details">
+        <div class="project-detail"><div class="project-detail-label">Service</div><div class="project-detail-value">Kitchen Renovation</div></div>
+        <div class="project-detail"><div class="project-detail-label">Location</div><div class="project-detail-value">Hamilton, ON</div></div>
+        <div class="project-detail"><div class="project-detail-label">Duration</div><div class="project-detail-value">2 Days</div></div>
+      </div>
+    </div>
+
+    <!-- Card 2: Bathroom -->
+    <div class="project-card" data-category="bathroom">
+      <span class="project-card-tag">Bathroom</span>
+      <div class="project-card-title">Full Bathroom Retile &amp; Fixture Upgrade</div>
+      <div class="ba-slider" data-pos="50">
+        <div class="ba-after">
+          <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=800&q=80" alt="After - Modern bathroom">
+        </div>
+        <div class="ba-before" style="width:50%">
+          <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80" alt="Before - Old bathroom">
+        </div>
+        <div class="ba-handle" style="left:50%">
+          <div class="ba-handle-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b83224" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+        <span class="ba-label ba-label-before">Before</span>
+        <span class="ba-label ba-label-after">After</span>
+      </div>
+      <div class="project-details">
+        <div class="project-detail"><div class="project-detail-label">Service</div><div class="project-detail-value">Bathroom Renovation</div></div>
+        <div class="project-detail"><div class="project-detail-label">Location</div><div class="project-detail-value">Ancaster, ON</div></div>
+        <div class="project-detail"><div class="project-detail-label">Duration</div><div class="project-detail-value">3 Days</div></div>
+      </div>
+    </div>
+
+    <!-- Card 3: Flooring -->
+    <div class="project-card" data-category="flooring">
+      <span class="project-card-tag">Flooring</span>
+      <div class="project-card-title">Hardwood Floor Installation</div>
+      <div class="ba-slider" data-pos="50">
+        <div class="ba-after">
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80" alt="After - New flooring">
+        </div>
+        <div class="ba-before" style="width:50%">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Before - Old flooring">
+        </div>
+        <div class="ba-handle" style="left:50%">
+          <div class="ba-handle-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b83224" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+        <span class="ba-label ba-label-before">Before</span>
+        <span class="ba-label ba-label-after">After</span>
+      </div>
+      <div class="project-details">
+        <div class="project-detail"><div class="project-detail-label">Service</div><div class="project-detail-value">Flooring &amp; Tiling</div></div>
+        <div class="project-detail"><div class="project-detail-label">Location</div><div class="project-detail-value">Dundas, ON</div></div>
+        <div class="project-detail"><div class="project-detail-label">Duration</div><div class="project-detail-value">1 Day</div></div>
+      </div>
+    </div>
+
+    <!-- Card 4: Painting -->
+    <div class="project-card" data-category="painting">
+      <span class="project-card-tag">Painting</span>
+      <div class="project-card-title">Interior Full-Room Repaint</div>
+      <div class="ba-slider" data-pos="50">
+        <div class="ba-after">
+          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=800&q=80" alt="After - Fresh paint">
+        </div>
+        <div class="ba-before" style="width:50%">
+          <img src="https://images.unsplash.com/photo-1560440021-33f9b867899d?w=800&q=80" alt="Before - Old paint">
+        </div>
+        <div class="ba-handle" style="left:50%">
+          <div class="ba-handle-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b83224" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+        <span class="ba-label ba-label-before">Before</span>
+        <span class="ba-label ba-label-after">After</span>
+      </div>
+      <div class="project-details">
+        <div class="project-detail"><div class="project-detail-label">Service</div><div class="project-detail-value">Painting &amp; Finishes</div></div>
+        <div class="project-detail"><div class="project-detail-label">Location</div><div class="project-detail-value">Hamilton, ON</div></div>
+        <div class="project-detail"><div class="project-detail-label">Duration</div><div class="project-detail-value">1 Day</div></div>
+      </div>
+    </div>
+
+    <!-- Card 5: Exterior -->
+    <div class="project-card" data-category="exterior">
+      <span class="project-card-tag">Exterior</span>
+      <div class="project-card-title">Deck Repair &amp; Power Wash</div>
+      <div class="ba-slider" data-pos="50">
+        <div class="ba-after">
+          <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80" alt="After - Deck">
+        </div>
+        <div class="ba-before" style="width:50%">
+          <img src="https://images.unsplash.com/photo-1599619351208-3e6c839d6828?w=800&q=80" alt="Before - Deck">
+        </div>
+        <div class="ba-handle" style="left:50%">
+          <div class="ba-handle-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b83224" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+        <span class="ba-label ba-label-before">Before</span>
+        <span class="ba-label ba-label-after">After</span>
+      </div>
+      <div class="project-details">
+        <div class="project-detail"><div class="project-detail-label">Service</div><div class="project-detail-value">Deck Repair</div></div>
+        <div class="project-detail"><div class="project-detail-label">Location</div><div class="project-detail-value">Stoney Creek, ON</div></div>
+        <div class="project-detail"><div class="project-detail-label">Duration</div><div class="project-detail-value">1 Day</div></div>
+      </div>
+    </div>
+
+    <!-- Card 6: Repairs -->
+    <div class="project-card" data-category="repairs">
+      <span class="project-card-tag">Repairs</span>
+      <div class="project-card-title">Drywall Repair &amp; Patch</div>
+      <div class="ba-slider" data-pos="50">
+        <div class="ba-after">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="After - Drywall">
+        </div>
+        <div class="ba-before" style="width:50%">
+          <img src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80" alt="Before - Drywall">
+        </div>
+        <div class="ba-handle" style="left:50%">
+          <div class="ba-handle-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#b83224" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l-6-6 6-6M15 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+        <span class="ba-label ba-label-before">Before</span>
+        <span class="ba-label ba-label-after">After</span>
+      </div>
+      <div class="project-details">
+        <div class="project-detail"><div class="project-detail-label">Service</div><div class="project-detail-value">Drywall Repair</div></div>
+        <div class="project-detail"><div class="project-detail-label">Location</div><div class="project-detail-value">Hamilton, ON</div></div>
+        <div class="project-detail"><div class="project-detail-label">Duration</div><div class="project-detail-value">Half Day</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h2>Ready for your own <em>transformation?</em></h2>
+  <p>Get a free estimate from Shem — no obligation, just an honest conversation about your home.</p>
+  <div class="cta-actions">
+    <a href="index.html#contact" class="btn-primary">
+      Get a Free Estimate
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" style="width:14px"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+    </a>
+    <a href="tel:6476316446" class="btn-outline">(647) 631-6446</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-info">
+    <a href="tel:6476316446">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      (647) 631-6446
+    </a>
+    <a href="/cdn-cgi/l/email-protection#d7b2adb0b8bfb6b9b3aebab6b997b0bab6bebbf9b4b8ba">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span class="__cf_email__" data-cfemail="127768757d7a737c766b7f737c52757f737b7e3c717d7f">[email&#160;protected]</span>
+    </a>
+  </div>
+  <p class="footer-copy">&copy; 2026 Ez Go Handyman Services — Hamilton, Ontario</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Nav scroll
+  var nav = document.getElementById('pageNav');
+  window.addEventListener('scroll', function() {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+
+  // Before/After sliders
+  document.querySelectorAll('.ba-slider').forEach(function(slider) {
+    var before = slider.querySelector('.ba-before');
+    var handle = slider.querySelector('.ba-handle');
+    var pos = 50;
+    var dragging = false;
+
+    function setPos(x) {
+      var rect = slider.getBoundingClientRect();
+      var pct = Math.min(Math.max(((x - rect.left) / rect.width) * 100, 2), 98);
+      before.style.width = pct + '%';
+      handle.style.left = pct + '%';
+    }
+
+    slider.addEventListener('mousedown', function(e) { dragging = true; setPos(e.clientX); e.preventDefault(); });
+    slider.addEventListener('touchstart', function(e) { dragging = true; setPos(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('mousemove', function(e) { if (dragging) setPos(e.clientX); });
+    window.addEventListener('touchmove', function(e) { if (dragging) setPos(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('mouseup', function() { dragging = false; });
+    window.addEventListener('touchend', function() { dragging = false; });
+  });
+
+  // Filter
+  function filterCards(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(function

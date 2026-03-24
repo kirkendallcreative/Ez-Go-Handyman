@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Services — Ez Go Handyman Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --black:      #241910;
+  --white:      #fdf8f2;
+  --cream:      #f2e9dc;
+  --tan:        #c4a882;
+  --red:        #b83224;
+  --red-light:  #d44032;
+  --dark:       #241910;
+  --text-main:  #2a1f18;
+  --text-muted: #6b5f55;
+  --border-tan: rgba(196,168,130,0.25);
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text-main); overflow-x: hidden; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 4rem; background: rgba(36,25,16,0.96); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(196,168,130,0.18); transition: background 0.4s ease; }
+nav.scrolled { background: rgba(36,25,16,0.45); }
+.nav-logo { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+.nav-logo-icon { width: 48px; height: 48px; flex-shrink: 0; }
+.nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 0.12em; color: var(--tan); line-height: 1.1; }
+.nav-logo-text span { display: block; font-size: 0.6rem; letter-spacing: 0.2em; color: rgba(196,168,130,0.5); font-family: 'DM Sans', sans-serif; font-weight: 300; }
+.nav-back { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); background: var(--red); padding: 0.6rem 1.2rem; text-decoration: none; transition: background 0.3s; }
+.nav-back:hover { background: var(--red-light); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--tan); }
+
+/* HERO BANNER */
+.page-hero { background: var(--dark); padding: 10rem 4rem 5rem; position: relative; overflow: hidden; }
+.page-hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(to right, transparent, var(--tan), transparent); opacity: 0.3; }
+.page-hero-inner { max-width: 700px; }
+.page-tag { display: inline-block; font-size: 0.63rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red); border: 1px solid rgba(184,50,36,0.3); padding: 0.3rem 0.8rem; margin-bottom: 1.4rem; }
+.page-hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 6vw, 6rem); letter-spacing: 0.04em; color: var(--white); line-height: 0.92; margin-bottom: 1.4rem; }
+.page-hero h1 em { font-style: normal; color: var(--tan); }
+.page-hero p { font-size: 0.95rem; line-height: 1.8; color: rgba(253,248,242,0.45); max-width: 560px; }
+
+/* EMERGENCY BANNER */
+.emergency-banner { background: var(--red); padding: 1.8rem 4rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.emergency-banner-text h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.06em; color: var(--white); margin-bottom: 0.2rem; }
+.emergency-banner-text p { font-size: 0.82rem; color: rgba(255,255,255,0.75); }
+.emergency-banner a { display: inline-flex; align-items: center; gap: 0.6rem; background: var(--white); color: var(--red); padding: 0.8rem 1.6rem; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: all 0.3s; white-space: nowrap; }
+.emergency-banner a:hover { background: var(--dark); color: var(--white); }
+
+/* SERVICES CONTENT */
+.services-page { padding: 6rem 4rem; }
+.services-page-inner { max-width: 1200px; margin: 0 auto; }
+
+/* CATEGORY */
+.service-category { margin-bottom: 5rem; }
+.category-header { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2.5rem; padding-bottom: 1.2rem; border-bottom: 2px solid var(--tan); }
+.category-icon { width: 52px; height: 52px; background: var(--dark); border: 1px solid rgba(196,168,130,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.category-icon svg { width: 24px; height: 24px; stroke: var(--tan); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.category-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: 0.06em; color: var(--text-main); }
+.category-header h2 em { font-style: normal; color: var(--red); }
+.category-desc { font-size: 0.88rem; line-height: 1.8; color: var(--text-muted); max-width: 680px; margin-bottom: 2rem; }
+
+/* SERVICE ITEMS GRID */
+.service-items-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(196,168,130,0.12); }
+.service-line { background: var(--white); padding: 1.1rem 1.4rem; display: flex; align-items: center; gap: 0.8rem; transition: background 0.25s; }
+.service-line:hover { background: var(--cream); }
+.service-line::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--tan); flex-shrink: 0; }
+.service-line span { font-size: 0.84rem; color: var(--text-muted); line-height: 1.4; }
+
+/* EMERGENCY SPECIAL */
+.emergency-category .category-header { border-bottom-color: var(--red); }
+.emergency-category .category-icon { background: var(--red); border-color: var(--red); }
+.emergency-category .category-icon svg { stroke: var(--white); }
+.emergency-note { background: rgba(184,50,36,0.06); border-left: 3px solid var(--red); padding: 1.2rem 1.5rem; margin-bottom: 2rem; font-size: 0.86rem; line-height: 1.7; color: var(--text-main); }
+.emergency-note strong { color: var(--red); }
+
+/* CTA STRIP */
+.cta-strip { background: var(--dark); padding: 6rem 4rem; text-align: center; position: relative; overflow: hidden; }
+.cta-strip::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(196,168,130,0.07) 0%, transparent 70%); }
+.cta-strip h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.4rem, 4vw, 4rem); letter-spacing: 0.04em; color: var(--white); margin-bottom: 1rem; position: relative; }
+.cta-strip h2 em { font-style: normal; color: var(--tan); }
+.cta-strip p { font-size: 0.92rem; color: rgba(253,248,242,0.45); max-width: 480px; margin: 0 auto 2.5rem; line-height: 1.8; position: relative; }
+.cta-strip-actions { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; position: relative; }
+.btn-primary { display: inline-flex; align-items: center; gap: 0.7rem; background: var(--red); color: var(--white); padding: 0.9rem 1.8rem; text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.3s; border: 1px solid var(--red); }
+.btn-primary:hover { background: transparent; color: var(--red); }
+.btn-outline { display: inline-flex; align-items: center; gap: 0.7rem; background: transparent; color: var(--tan); padding: 0.9rem 1.8rem; text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; transition: all 0.3s; border: 1px solid rgba(196,168,130,0.4); }
+.btn-outline:hover { background: var(--tan); color: var(--dark); }
+
+/* FOOTER */
+footer { background: var(--black); padding: 3rem 4rem; border-top: 1px solid rgba(196,168,130,0.1); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+.footer-info { display: flex; align-items: center; gap: 1rem; }
+.footer-info a { font-size: 0.82rem; color: rgba(253,248,242,0.42); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s; }
+.footer-info a:hover { color: var(--tan); }
+.footer-info svg { width: 13px; height: 13px; stroke: var(--tan); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.footer-copy { font-size: 0.72rem; color: rgba(253,248,242,0.18); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  nav { padding: 1rem 1.5rem; }
+  .page-hero { padding: 8rem 2rem 4rem; }
+  .emergency-banner { padding: 1.5rem 2rem; }
+  .services-page { padding: 4rem 2rem; }
+  .service-items-grid { grid-template-columns: 1fr 1fr; }
+  .cta-strip { padding: 4rem 2rem; }
+  footer { padding: 2.5rem 2rem; flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 580px) {
+  nav { padding: 0.9rem 1.2rem; }
+  .page-hero { padding: 7rem 1.2rem 3rem; }
+  .emergency-banner { padding: 1.2rem 1.2rem; flex-direction: column; align-items: flex-start; }
+  .services-page { padding: 3rem 1.2rem; }
+  .service-items-grid { grid-template-columns: 1fr; }
+  .category-header { gap: 1rem; }
+  .cta-strip { padding: 3rem 1.2rem; }
+  .cta-strip-actions { flex-direction: column; align-items: center; }
+  footer { padding: 2rem 1.2rem; }
+  .footer-info { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="pageNav">
+  <a href="index.html" class="nav-logo">
+    <img class="nav-logo-icon" src="https://i.imgur.com/uiKv9Dd.png" alt="Ez Go Handyman Services">
+    <div class="nav-logo-text">Ez Go Handyman<span>Services — Hamilton, ON</span></div>
+  </a>
+  <a href="index.html" class="nav-back">&#8592; Back to Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-tag">Full Service List</div>
+    <h1>Everything we <em>do</em></h1>
+    <p>From routine maintenance to emergency call-outs, Ez Go Handyman Services handles it all with professionalism, speed, and care. Serving Hamilton and the surrounding area.</p>
+  </div>
+</div>
+
+<!-- EMERGENCY BANNER -->
+<div class="emergency-banner">
+  <div class="emergency-banner-text">
+    <h3>&#9888; Emergency Services Available</h3>
+    <p>Health &amp; safety risks responded to within 2 hours across the city of Hamilton.</p>
+  </div>
+  <a href="tel:6476316446">(647) 631-6446 — Call Now</a>
+</div>
+
+<!-- SERVICES -->
+<section class="services-page">
+  <div class="services-page-inner">
+
+    <!-- General Home Maintenance -->
+    <div class="service-category">
+      <div class="category-header">
+        <div class="category-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h2>General Home <em>Maintenance</em> &amp; Repair</h2>
+      </div>
+      <div class="service-items-grid">
+        <div class="service-line"><span>Inspect &amp; service smoke and carbon monoxide detectors</span></div>
+        <div class="service-line"><span>Replacing burned out light bulbs</span></div>
+        <div class="service-line"><span>Regrouting or recaulking sinks, tubs, and showers</span></div>
+        <div class="service-line"><span>Inspecting and replacing HVAC filters</span></div>
+        <div class="service-line"><span>Dryer vent cleaning</span></div>
+        <div class="service-line"><span>Lubricating door hinges and locks</span></div>
+        <div class="service-line"><span>Ceiling fan installation</span></div>
+        <div class="service-line"><span>Water filter replacement</span></div>
+        <div class="service-line"><span>Door installation</span></div>
+        <div class="service-line"><span>Drywall repair and painting</span></div>
+        <div class="service-line"><span>Power washing siding, decks, or driveways</span></div>
+        <div class="service-line"><span>Baseboard installation</span></div>
+        <div class="service-line"><span>Deck repair</span></div>
+        <div class="service-line"><span>Rain gutter maintenance</span></div>
+        <div class="service-line"><span>Window repair</span></div>
+        <div class="service-line"><span>Weather stripping</span></div>
+        <div class="service-line"><span>Winterizing homes</span></div>
+        <div class="service-line"><span>Sealing cracks in driveway and foundation</span></div>
+        <div class="service-line"><span>Maintaining interior and exterior paint</span></div>
+        <div class="service-line"><span>Fence and gate repair</span></div>
+        <div class="service-line"><span>Leaking faucet repair</span></div>
+        <div class="service-line"><span>Shower head replacement</span></div>
+        <div class="service-line"><span>HVAC maintenance</span></div>
+        <div class="service-line"><span>And so much more!</span></div>
+      </div>
+    </div>
+
+    <!-- Emergency -->
+    <div class="service-category emergency-category">
+      <div class="category-header">
+        <div class="category-icon">
+          <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <h2><em>Emergency</em> Services</h2>
+      </div>
+      <div class="emergency-note">
+        <strong>We respond in under 2 hours</strong> within the city of Hamilton for situations that create a health and safety risk, risk of property damage, or loss of an essential system.
+      </div>
+      <div class="service-items-grid">
+        <div class="service-line"><span>Clogged drains</span></div>
+        <div class="service-line"><span>Overflowing and clogged toilets</span></div>
+        <div class="service-line"><span>Water leaks causing a flood</span></div>
+        <div class="service-line"><span>Clean up service after a flood</span></div>
+        <div class="service-line"><span>Power outage in isolated areas of the home</span></div>
+        <div class="service-line"><span>Broken light fixtures or switches that pose a fire hazard</span></div>
+        <div class="service-line"><span>Tripped breakers that won't reset</span></div>
+        <div class="service-line"><span>Broken doors or locks after a break-in</span></div>
+        <div class="service-line"><span>Windows that won't open or shattered</span></div>
+        <div class="service-line"><span>Damaged stairs or railings causing a hazard</span></div>
+        <div class="service-line"><span>Ceiling leaks or sagging from water damage</span></div>
+        <div class="service-line"><span>Board-up service after a storm, break-in, or accident</span></div>
+        <div class="service-line"><span>Garage door stuck open or closed</span></div>
+      </div>
+    </div>
+
+    <!-- ADA Accessibility -->
+    <div class="service-category">
+      <div class="category-header">
+        <div class="category-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="M12 22V12M12 12l-3 4M12 12l3 4M8 7h8"/></svg>
+        </div>
+        <h2>ADA <em>Accessibility</em> Improvements</h2>
+      </div>
+      <div class="service-items-grid">
+        <div class="service-line"><span>Grab bar installation (toilets, tubs, showers)</span></div>
+        <div class="service-line"><span>Raised toilet seats / comfort-height toilet installs</span></div>
+        <div class="service-line"><span>Toilet paper holder &amp; towel bar repositioning</span></div>
+        <div class="service-line"><span>Accessible sink and faucet replacements</span></div>
+        <div class="service-line"><span>Lever-handle faucet installation</span></div>
+        <div class="service-line"><span>Anti-slip strips or mats for tubs and showers</span></div>
+        <div class="service-line"><span>Lever-style door handle installation</span></div>
+        <div class="service-line"><span>Door closer adjustment</span></div>
+        <div class="service-line"><span>Threshold height adjustments (within code limits)</span></div>
+        <div class="service-line"><span>Widening door swing clearance</span></div>
+        <div class="service-line"><span>Weatherstripping that doesn't create a trip hazard</span></div>
+        <div class="service-line"><span>Light switch &amp; outlet height adjustments</span></div>
+        <div class="service-line"><span>Cabinet hardware swaps (pulls instead of knobs)</span></div>
+        <div class="service-line"><span>Smart switches, motion lights, or voice-activated devices</span></div>
+        <div class="service-line"><span>Handrails for stairs and hallways</span></div>
+        <div class="service-line"><span>Furniture repositioning for clear pathways</span></div>
+        <div class="service-line"><span>Ramp installation</span></div>
+      </div>
+    </div>
+
+    <!-- Plumbing -->
+    <div class="service-category">
+      <div class="category-header">
+        <div class="category-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg>
+        </div>
+        <h2>Plumbing <em>System</em> Services</h2>
+      </div>
+      <div class="service-items-grid">
+        <div class="service-line"><span>Unclogging drains</span></div>
+        <div class="service-line"><span>Replacing faucets, shower heads, and toilets</span></div>
+        <div class="service-line"><span>Replacing garbage disposals and sink traps</span></div>
+        <div class="service-line"><span>Repairing leaking faucets and water supply lines</span></div>
+        <div class="service-line"><span>Replacing water shut off valves</span></div>
+        <div class="service-line"><span>Insulating exposed pipes for cold weather protection</span></div>
+        <div class="service-line"><span>Testing water pressure and valve function</span></div>
+        <div class="service-line"><span>Water filtration system install</span></div>
+        <div class="service-line"><span>Toilet bidet installation</span></div>
+        <div class="service-line"><span>Water heater maintenance and repair</span></div>
+      </div>
+    </div>
+
+    <!-- Electrical -->
+    <div class="service-category">
+      <div class="category-header">
+        <div class="category-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+        </div>
+        <h2>Electrical <em>Systems</em></h2>
+      </div>
+      <div class="service-items-grid">
+        <div class="service-line"><span>Installing ceiling fans and light fixtures</span></div>
+        <div class="service-line"><span>Replacing outlets and switches</span></div>
+        <div class="service-line"><span>Repair loose outlets and covers</span></div>
+        <div class="service-line"><span>Installing exterior lighting</span></div>
+        <div class="service-line"><span>Troubleshooting minor electrical issues</span></div>
+        <div class="service-line"><span>Replace or upgrade to LED lights or dimmer switches</span></div>
+        <div class="service-line"><span>Label circuits on electrical panels</span></div>
+        <div class="service-line"><span>Install doorbell camera</span></div>
+        <div class="service-line"><span>Smart device installations</span></div>
+      </div>
+    </div>
+
+    <!-- HVAC -->
+    <div class="service-category">
+      <div class="category-header">
+        <div class="category-icon">
+          <svg viewBox="0 0 24 24"><path d="M9.59 4.59A2 2 0 1111 8H2m10.59 11.41A2 2 0 1014 16H2m15.73-8.27A2.5 2.5 0 1119.5 12H2"/></svg>
+        </div>
+        <h2><em>HVAC</em></h2>
+      </div>
+      <div class="service-items-grid">
+        <div class="service-line"><span>Replacing HVAC filters</span></div>
+        <div class="service-line"><span>Cleaning outdoor condenser and clearing obstructions</span></div>
+        <div class="service-line"><span>Clean air return grilles and vents</span></div>
+      </div>
+    </div>
+
+    <!-- Bathroom & Kitchen -->
+    <div class="service-category">
+      <div class="category-header">
+        <div class="category-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 12h16M4 12a2 2 0 01-2-2V7a1 1 0 011-1h2V4a2 2 0 012-2h6a2 2 0 012 2v2h2a1 1 0 011 1v3a2 2 0 01-2 2"/><rect x="6" y="12" width="12" height="8" rx="1"/></svg>
+        </div>
+        <h2>Bathroom <em>&amp;</em> Kitchen</h2>
+      </div>
+      <div class="service-items-grid">
+        <div class="service-line"><span>Recaulking tubs, showers, and sinks</span></div>
+        <div class="service-line"><span>Cleaning and replacing exhaust fans</span></div>
+        <div class="service-line"><span>Descaling faucets and showerheads</span></div>
+        <div class="service-line"><span>New faucet and shower head installation</span></div>
+        <div class="service-line"><span>Repair or replace shower curtains, rods, and doors</span></div>
+        <div class="service-line"><span>Grab bar installation</span></div>
+        <div class="service-line"><span>New toilet installation</span></div>
+        <div class="service-line"><span>Toilet repair (handles, flappers, fill valves)</span></div>
+        <div class="service-line"><span>New bathroom vanity installation</span></div>
+        <div class="service-line"><span>Water filtration system installation</span></div>
+        <div class="service-line"><span>Repair or replace garbage disposal</span></div>
+        <div class="service-line"><span>Appliance repair and installation</span></div>
+        <div class="service-line"><span>Troubleshoot and resolve slow drains</span></div>
+        <div class="service-line"><span>Patch and repair drywall and tile</span></div>
+        <div class="service-line"><span>Repair or replace under-sink plumbing</span></div>
+      </div>
+    </div>
+
+    <!-- Assembly & Installation -->
+    <div class="service-category">
+      <div class="category-header">
+        <div class="category-icon">
+          <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h2>Assembly <em>&amp;</em> Installation</h2>
+      </div>
+      <div class="service-items-grid">
+        <div class="service-line"><span>Assembling furniture (IKEA &amp; flat-pack items)</span></div>
+        <div class="service-line"><span>Outdoor equipment (grills, playsets, sheds)</span></div>
+        <div class="service-line"><span>Installing ceiling fans and light fixtures</span></div>
+        <div class="service-line"><span>Mounting TVs</span></div>
+        <div class="service-line"><span>Installing blinds, curtains, and window shades</span></div>
+        <div class="service-line"><span>Setting up home appliances</span></div>
+        <div class="service-line"><span>Doorbell camera installation</span></div>
+        <div class="service-line"><span>Water filtration installation</span></div>
+        <div class="service-line"><span>Installing tile backsplashes</span></div>
+        <div class="service-line"><span>Drywall installation</span></div>
+        <div class="service-line"><span>Pet door installation</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h2>Don't see what you need? <em>Just ask.</em></h2>
+  <p>Ez Go handles far more than what's listed here. Get in touch and Shem will let you know if he can help.</p>
+  <div class="cta-strip-actions">
+    <a href="index.html#contact" class="btn-primary">
+      Get a Free Estimate
+      <svg viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" style="width:14px"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+    </a>
+    <a href="tel:6476316446" class="btn-outline">
+      Call (647) 631-6446
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-info">
+    <a href="tel:6476316446">
+      <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      (647) 631-6446
+    </a>
+    <a href="/cdn-cgi/l/email-protection#5b3e213c34333a353f22363a351b3c363a323775383436">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span class="__cf_email__" data-cfemail="1d78677a72757c737964707c735d7a707c7471337e7270">[email&#160;protected]</span>
+    </a>
+  </div>
+  <p class="footer-copy">&copy; 2026 Ez Go Handyman Services — Hamilton, Ontario</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-stat
